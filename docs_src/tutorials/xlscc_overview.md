@@ -19,7 +19,7 @@ Create a file called `test.cc` with the following contents.
 
 ```c++
 #pragma hls_top
-int add3(int input) { return input + 3; }
+int add3(int test_input) { return test_input + 3; }
 ```
 
 Note that `#pragma hls_top` denotes the top-level function for the module. The
@@ -43,9 +43,9 @@ package my_package
 
 file_number 1 "./test.cc"
 
-top fn add3(input: bits[32]) -> bits[32] {
+top fn add3(test_input: bits[32]) -> bits[32] {
   literal.2: bits[32] = literal(value=3, id=2, pos=[(1,2,23)])
-  ret add.3: bits[32] = add(input, literal.2, id=3, pos=[(1,2,23)])
+  ret add.3: bits[32] = add(test_input, literal.2, id=3, pos=[(1,2,23)])
 }
 ```
 
@@ -81,11 +81,11 @@ The resulting `test.v` should have contents similar to the following
 
 ```
 module xls_test(
-  input wire [31:0] input,
+  input wire [31:0] test_input,
   output wire [31:0] out
 );
   wire [31:0] add_6;
-  assign add_6 = input + 32'h0000_0003;
+  assign add_6 = test_input + 32'h0000_0003;
   assign out = add_6;
 endmodule
 ```
